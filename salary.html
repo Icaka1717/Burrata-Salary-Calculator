@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Burrata</title>
+</head>
+
+<head>
+    <meta charset="utf-8">
+    <title>burrata italiana</title>
+
+
+    <div class="nav">
+        <nav>
+            <div class="logo">
+                <img href="index.html" src="images/Logo.png" alt="">
+            </div>
+
+            <div class="bg"></div>
+
+        </nav>
+    </div>
+
+
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+
+        }
+
+        body {
+
+            fill: url(burrata-italiana.jpg);
+
+
+            font-family: Arial, sans-serif;
+        }
+
+
+
+        .coupons .c-p-container h1 {
+            position: absolute;
+
+            bottom: 350px;
+            color: white;
+        }
+
+        .box {
+            display: grid;
+            place-items: center;
+            margin-top: 100px;
+        }
+
+        .container {
+
+            width: 90%;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            margin-bottom: 20px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        button {
+            background-color: #0066cc;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0052a3;
+        }
+
+        #result {
+            font-size: 1.5rem;
+            margin-top: 30px;
+            text-align: center;
+            color: #333;
+        }
+
+        @media screen and (max-width: 768px) {
+            .container {
+                margin: 30px auto;
+            }
+
+            h1 {
+                font-size: 2rem;
+                margin-bottom: 20px;
+            }
+
+            label {
+                font-size: 1rem;
+            }
+
+            input[type="number"] {
+                font-size: 1rem;
+                margin-bottom: 10px;
+            }
+
+            button {
+                font-size: 1rem;
+            }
+
+            #result {
+                font-size: 1.2rem;
+            }
+
+            #coupons {
+                font-size: 1.2rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="container">
+            <h1>На час</h1>
+            <form>
+                <label for="hourly-wage">Ставка:</label>
+                <input type="number" id="hourly-wage" step="0.01" min="0" required>
+                <label for="hours-worked">Часове:</label>
+                <input type="number" id="hours-worked" step="0.01" min="0" required>
+                <button type="button" onclick="calculateSalary()">Калкулирай</button>
+
+
+            </form>
+            <div id="result"></div>
+            <div id="coupons"></div>
+        </div>
+    </div>
+
+
+
+    <div class="container">
+        <h1>Процент от оборота</h1>
+        <form>
+            <label for="turnover">Оборот:</label>
+            <input type="number" id="turnover" placeholder="Въведи оборот" />
+
+            <label for="percentage">Процент:</label>
+            <input type="number" id="percentage" placeholder="Въведи Процент" />
+
+            <button type="button" id="calculate">Калкулирай</button>
+
+            <div id="resultPercent"></div>
+            <div id="couponsPercent"></div>
+        </form>
+    </div>
+
+    <script>
+        function calculateSalary() {
+            const hourlyWage = parseFloat(document.getElementById('hourly-wage').value);
+            const hoursWorked = parseFloat(document.getElementById('hours-worked').value);
+            const monthlySalary = hourlyWage * hoursWorked * 0.78; // 22% deductions
+            const resultElement = document.getElementById('result');
+            resultElement.textContent = `Твоята заплата, след всички удръжки е: ${monthlySalary.toFixed(2)} BGN`;
+            const couponsElement = document.getElementById('coupons');
+            couponsElement.textContent = `Като изключим ваучерите : ${monthlySalary - 160} `;
+
+        }
+
+        const calculateBtn = document.getElementById('calculate');
+        const resultDiv = document.getElementById('result');
+
+        calculateBtn.addEventListener('click', () => {
+            const turnover = document.getElementById('turnover').value;
+            const percentage = document.getElementById('percentage').value;
+
+            if (!turnover || !percentage) {
+                resultDiv.innerHTML = 'Моля въведи оборот и процент!';
+            } else {
+                const result = (turnover * percentage) / 100;
+                const tax = (result * 22) / 100;
+                const finalAmount = result - tax;
+                const resultElement = document.getElementById('resultPercent');
+                resultElement.textContent = `Твоята заплата, след всички удръжки е: ${finalAmount.toFixed(2)}`;
+                const couponsElement = document.getElementById('couponsPercent');
+                couponsElement.textContent = `Като изключим ваучерите : ${finalAmount - 160} `;
+            }
+        });
+
+
+    </script>
+
+</body>
+
+</html>
